@@ -12,6 +12,9 @@ bot = telebot.TeleBot(token)
 
 durl='https://www.dropbox.com/s/m7z8uj88smjjhd4/movies_raw_dataset.csv?dl=0'
 data = pd.read_csv('movies.csv', sep='\t')
+#csv изменен, убраны заголовки и файл разобран по конкретным колонкам
+data1 =pd.read_csv('movies1.csv', delimiter=',', names=['id','belongs_to_collection','budget','genres','homepage','imdb_id','original_language','original_title','overview','popularity','poster_path','production_companies','production_countries','release_date','runtime','spoken_languages','status','tagline','title','Keywords','cast','crew','revenue'])
+
 
 @bot.message_handler(commands=['start'])
 def cmd_start(message):
@@ -35,8 +38,8 @@ def cmd_help(message):
 @bot.message_handler(commands=['dataset_info'])
 def cmd_dataset_info(message):
     bot.send_message(message.chat.id, 'Dataset доступен по ссылке ' + durl + ' и состоит из полей:')
-    bot.send_message(message.chat.id, data[:1])
-
+    bot.send_message(message.chat.id, str(data1.columns.tolist()))
+    bot.send_message(message.chat.id, str(data1.describe()))
 
 # @bot.message_handler(commands=['models_info'])
 # def cmd_models_info(message):
